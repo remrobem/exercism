@@ -5,11 +5,11 @@ describe(')', () => {
     expect(annotate([])).toEqual([]);
   });
 
-  xtest('handles no columns', () => {
+  test('handles no columns', () => {
     expect(annotate([''])).toEqual(['']);
   });
 
-  xtest('handles no mines', () => {
+  test('handles no mines', () => {
     const input = [
       '   ',
       '   ',
@@ -23,7 +23,7 @@ describe(')', () => {
     expect(annotate(input)).toEqual(expected);
   });
 
-  xtest('handles board with only mines', () => {
+  test('handles board with only mines', () => {
     const input = [
       '***',
       '***',
@@ -37,7 +37,7 @@ describe(')', () => {
     expect(annotate(input)).toEqual(expected);
   });
 
-  xtest('handles mine surrounded by spaces', () => {
+  test('handles mine surrounded by spaces', () => {
     const input = [
       '   ',
       ' * ',
@@ -51,7 +51,7 @@ describe(')', () => {
     expect(annotate(input)).toEqual(expected);
   });
 
-  xtest('handles space surrounded by mines', () => {
+  test('handles space surrounded by mines', () => {
     const input = [
       '***',
       '* *',

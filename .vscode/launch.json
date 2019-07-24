@@ -8,7 +8,7 @@
             "type": "node",
             "request": "launch",
             "name": "Launch Program",
-            "program": "${workspaceFolder}/javascript/all-your-base/all-your-base.js"
+            "program": "${workspaceFolder}/javascript/minesweeper/minesweeper.js"
         }
     ]
 }
