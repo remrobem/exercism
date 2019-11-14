@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 class InputCell {
     constructor(num) {
         this.value = num;
@@ -79,4 +80,13 @@ class CallbackCell {
 }
 
 
-export { InputCell, ComputeCell, CallbackCell };
+// export { InputCell, ComputeCell, CallbackCell };
+
+
+const inputCell = new InputCell(1);
+const computeCell = new ComputeCell(
+  [inputCell],
+  inputs => inputs[0].value + 1,
+);
+inputCell.setValue(3);
+console.log(computeCell.value);

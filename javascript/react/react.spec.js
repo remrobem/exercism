@@ -1,4 +1,4 @@
-import { InputCell, ComputeCell, CallbackCell } from './react_test';
+import { InputCell, ComputeCell, CallbackCell } from './react';
 
 describe('React module', () => {
   test('accepts input', () => {
