@@ -1,5 +1,4 @@
 
-
 export const gigasecond = (date) => {
-  return new Date(date.setUTCSeconds(date.getUTCSeconds() + 1000000000));
+  return new Date(date.getTime() + 1e12)
 };
