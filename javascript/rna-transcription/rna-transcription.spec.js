@@ -21,6 +21,10 @@ describe('Transcription', () => {
     expect(toRna('A')).toEqual('U');
   });
 
+  test('invalid', () => {
+    const expectedError = 'Invalid nucleotide: Z'
+    expect( () => toRna('Z')).toThrow(expectedError);
+  });
   test('transcribes all dna nucleotides to their rna complements', () => {
     expect(toRna('ACGTGGTCTTAA')).toEqual('UGCACCAGAAUU');
   });
