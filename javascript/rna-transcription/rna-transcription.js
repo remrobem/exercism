@@ -3,7 +3,7 @@ export const toRna = (dna) => {
   // initialize value to return
   let rna = '';
   // nucleotide transcription
-  let transcription = {
+  const transcription = {
     G: 'C',
     C: 'G',
     T: 'A',
