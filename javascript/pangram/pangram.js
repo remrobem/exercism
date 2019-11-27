@@ -1,25 +1,13 @@
-const ALPHABET = [
-  'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'
-]
+const ALPHABET = [...'abcdefghijklmnopqrstuvwxyz'];
 
-export const isPangram = (string) => {
+export const isPangram = (paramString) => {
+  // input may have upper case letters
+  const string = paramString.toLowerCase();
 
-string = string.toLowerCase();
-
-// filter will search for all letters, even if one has alreay been found missing
-let missing = ALPHABET.filter( (letter) => {
-  return !string.includes(letter)
-})
-
-return missing.length == 0;
-
-// for loop will stop on first missing letter
-// for (let i=0; i < ALPHABET.length - 1; i++) {
-//   if (!string.includes(ALPHABET[i])) {
-//     return false;
-//   }
-// }
-
-// return true;
-
+  // callback function for checking for existence of every letter in alphabet
+  const isFound = (letter) => string.includes(letter);
+  
+  // true: all letters of ALPHABET in the string parameter. 
+  // false: first occurance of ALPHABET letter not in string parameter. 
+  return ALPHABET.every(isFound);
 };
