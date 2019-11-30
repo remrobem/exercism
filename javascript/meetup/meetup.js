@@ -1,84 +1,72 @@
-const DAYS_OF_WEEK = { Sunday: 0, Monday: 1, Tuesday: 2, Wednesday: 3, Thursday: 4, Friday: 5, Saturday: 6 };
-
-export const meetupDay = (p_year, p_month, p_day, p_qualifier) => {
-
+export const meetupDay = (p_year, p_month, p_day, p_request) => {
+  // first date for the day requested
   const first = () => {
-    return getMeetingDate(1);
+    return getFirstDateForDay(p_year, p_month);
   }
 
+  // 7 days after the first date for the day requested
   const second = () => {
-    return getMeetingDate(7);
+    const date = getFirstDateForDay(p_year, p_month);
+    return new Date(p_year, p_month, (date.getDate() + 7));
   }
 
+  // 14 days after the first date for the day requested
   const third = () => {
-    return getMeetingDate(13);
+    const date = getFirstDateForDay(p_year, p_month);
+    return new Date(p_year, p_month, (date.getDate() + 14));
   }
 
+  // 21 days after the first date for the day requested
   const fourth = () => {
-    return getMeetingDate(20);
+    const date = getFirstDateForDay(p_year, p_month);
+    return new Date(p_year, p_month, (date.getDate() + 21));
   }
-
+  
+  // 28 days after the first date for the day requested
+  // error returned if there are not 5 occurances of the day in the month
   const fifth = () => {
-    const date = getMeetingDate(27);
-    if (date.getMonth()!= p_month) {
-        throw new Error(`There is no fifth ${p_day} for ${p_month} ${p_year}`);
+    const date = getFirstDateForDay(p_year, p_month);
+    let fifthDay = new Date(p_year, p_month, (date.getDate() + 28));
+    if (fifthDay.getMonth() != p_month) {
+      throw new Error(`There is no fifth ${p_day} for ${p_month} ${p_year}`);
     }
-    return date;
+    return fifthDay;
   }
 
   const last = () => {
-    console.log('last');
-    const fourth =  getMeetingDate(20);
-    const fifth = getMeetingDate(27);
-    console.log('fourth: ', fourth);
-    console.log('fifth: ', fifth)
-    return fifth.getMonth() != p_month ? fourth : fifth;
-
-
+    // return the 5th occurance of the day if it exists, otherwise return the 4th occurance
+    let fifthDay = '';
+    try {
+      fifthDay = fifth();
+    }
+    catch {
+      return fourth();
+    }
+    return fifthDay;
   }
 
+  // first occurance of the day starting from the 13th
   const teenth = () => {
-    const date13th = new Date(p_year, p_month, 13)
-    const dayOfWeek13th = date13th.getDay();
-    let newDate;
-
-    newDate = meetingDayOfWeek < dayOfWeek13th
-      ? 20 + (meetingDayOfWeek - dayOfWeek13th)
-      : 13 + (meetingDayOfWeek - dayOfWeek13th);
-
-    return new Date(p_year, p_month, newDate)
-
+    return getFirstDateForDay(p_year, p_month, 13);
   }
 
-  const getMeetingDate = (startDate) => {
-
-    // let newDate = '';
-    let meetingDate = '';
-    const startOfMonth = new Date(p_year, p_month, startDate);
+  // first occurance of the day in the month from the p_start date of the month
+  const getFirstDateForDay = (p_year, p_month, p_start = 1) => {
+    const startOfMonth = new Date(p_year, p_month, p_start);
     const startDayOfWeek = startOfMonth.getDay();
     const diffDayOfWeek = meetingDayOfWeek - startDayOfWeek;
-    console.log('1 - startofmonth: ', startOfMonth);
 
-    if (diffDayOfWeek >= 0) {
-      startOfMonth.setDate(startOfMonth.getDate() + startDate + meetingDayOfWeek);
-      // meetingDate = new Date(p_year, p_month, (startDate + meetingDayOfWeek));
-    } else {
-      startOfMonth.setDate(startOfMonth.getDate() + startDate + 7 + diffDayOfWeek);
-      // meetingDate = new Date(p_year, p_month, (startDate + 7 + diffDayOfWeek));
-    }
-// console.log('meetingDate: ', meetingDate)
-    // newDate = meetingDate.getDate();
-    // return new Date(p_year, p_month, newDate);
-    // return meetingDate;
-console.log('2 - startofmonth: ', startOfMonth);
+    const meetingDate = diffDayOfWeek >= 0
+      ? new Date(p_year, p_month, (p_start + diffDayOfWeek))
+      : new Date(p_year, p_month, (p_start + 7 + diffDayOfWeek));
 
-    return startOfMonth;
+    return new Date(p_year, p_month, meetingDate.getDate());
   }
 
 
-  const QUALIFIER_FUNC = { '1st': first, '2nd': second, '3rd': third, '4th': fourth, '5th': fifth, 'last': last, 'teenth': teenth };
+  const DAYS_OF_WEEK = { Sunday: 0, Monday: 1, Tuesday: 2, Wednesday: 3, Thursday: 4, Friday: 5, Saturday: 6 };
   const meetingDayOfWeek = DAYS_OF_WEEK[p_day];
+  const REQUEST_METHODS = { '1st': first, '2nd': second, '3rd': third, '4th': fourth, '5th': fifth, 'last': last, 'teenth': teenth };
 
-  return QUALIFIER_FUNC[p_qualifier]();
-  // throw new Error("Remove this statement and implement this function");
+  return REQUEST_METHODS[p_request]();
 }
