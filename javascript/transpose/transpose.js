@@ -1,42 +1,39 @@
-import { loadOptions } from "@babel/core";
 
-export const transpose = (strings) => {
+export const transpose = (input) => {
 
-  // const input = ['FRACTURE', 'OUTLINED', 'BLOOMING', 'SEPTETTE'];
-  // const expected = ['FOBS', 'RULE', 'ATOP', 'CLOT', 'TIME', 'UNIT', 'RENT', 'EDGE'];
-
-
-  // if no 2nd string, return array of the 1st string
-  if (!strings[1]) {
-    return strings[0] ? strings[0].split('') : [];
+  // if no 2nd string, return array of the 1st string or empty array
+  if (!input[1]) {
+    return input[0] ? input[0].split('') : [];
   }
-  // pad with spaces at end to get strings same length
-  const maxLength = strings.reduce((max, curr) => {
+  // need longest string to pad with spaces as needed
+  const maxLength = input.reduce((max, curr) => {
     return curr.length > max ? curr.length : max;
   }, 0);
-  // strings = strings.map(string => {
-  //   return string.padEnd(maxLength, ' ');
-  // });
 
-  strings = strings.map(string => {
+  // array of letters for each input string
+  const strings = input.map(string => {
     return string.split('');
   });
 
-// console.log(strings)
+  let transposedString = '';
+  let transposed = [];
 
-  // split each string into an array with entry for each char in string
-  // const array0 = strings[0].split('');
-  // const array1 = strings[1].split('');
-
-  // concat values from 2 arrays 
-  // need to use maxlength
-  return strings[0].map((char, index) => {
-    for (let i = 1; i < strings.length; i++) {
-      if (index < strings[i].length) {
-        char = char.concat(strings[i][index])
+  // loop to create new string - each new string needs to have length = maxLength
+  for (let letterIndex = 0; letterIndex < maxLength; letterIndex++) {
+    // loop thru input strings array getting letter for same position in each string
+    strings.map((string) => {
+      // use letter at current position or pad with spaces 
+      if (letterIndex < string.length) {
+        transposedString = transposedString.concat(string[letterIndex])
+      } else {
+        transposedString = transposedString.concat(' ');
       }
-    }
-    // console.log(char)
-    return char;
-  })
+    })
+
+    transposed.push(transposedString);
+    transposedString = '';
+  }
+  // last entry may have extra spaces concatenated on to the end - need to be removed
+  transposed[transposed.length - 1] = transposed[transposed.length - 1].trimEnd();
+  return transposed;
 };
