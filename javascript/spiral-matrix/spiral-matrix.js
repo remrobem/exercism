@@ -6,9 +6,7 @@
 export class SpiralMatrix {
   static ofSize(size) {
 
-    console.log(size)
-
-    let array = [...Array(size)].map(entry => [...Array(size)]);
+    let spiral = [...Array(size)].map(entry => [...Array(size)]);
 
     let row = 0;
     let column = 0;
@@ -16,9 +14,7 @@ export class SpiralMatrix {
 
     for (let count = 1; count <= (size * size); count++) {
 
-      array[row][column] = count;
-
-      console.log(array)
+      spiral[row][column] = count;
 
       if (direction === 'right') {
         column++;
@@ -28,16 +24,12 @@ export class SpiralMatrix {
       }
       if (direction === 'up') {
         row--;
-      } if (direction === 'down') {
+      } 
+      if (direction === 'down') {
         row++;
       }
 
-      console.log(array)
-      console.log(`A row: ${row} ${column}`)
-
-      if ( typeof array[row][column] != 'undefined' || row > size - 1 || column > size - 1 || row < 0 || column < 0) {
-
-        console.log(`before switch ${direction} ${row} ${column} ${size} ${array[row][column]}`)
+      if (row > size - 1 || column > size - 1 || row < 0 || column < 0 || typeof spiral[row][column] != 'undefined') {
 
         switch (direction) {
           case 'right':
@@ -53,29 +45,20 @@ export class SpiralMatrix {
           case 'left':
             direction = 'up';
             row--;
-            column--;
+            column++;
             break;
           case 'up':
             direction = 'right';
-            row--;
+            row++;
             column++;
             break;
           default:
             break;
         }
-        console.log(`after switch ${direction} ${row} ${column}`)
-
-      }
-
-      console.log(`B row: ${row} ${column}`)
-      if (array[row][column] === 'undefined') {
-        array[row][column] = count;
       }
     }
 
+  return spiral;
 
-    console.log(array)
-
-    // throw new Error("Remove this statement and implement this function");
   }
 }
