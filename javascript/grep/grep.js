@@ -47,11 +47,34 @@ const patterns = parameters.filter(flag => {
 // - `-i` Match line using a case-insensitive comparison.
 // - `-v` Invert the program -- collect all lines that fail to match the pattern.
 // - `-x` Only match entire lines, instead of lines that contain a match.
-let doPrintLine = true;
-let doPrintFilenameOnly = true;
-let doCaseInsensitive = false;
-let doInvert = false;
-let doMatchLine = false;
+let isPrintLine = false;
+let isPrintFilenameOnly = false;
+let isCaseInsensitive = false;
+let isInvert = false;
+let isMatchLine = false;
+
+flags.map(flag => {
+    const value = flag.charAt(flag.length - 1);
+    switch (value) {
+        case 'n':
+            isPrintLine = true;
+            break;
+        case 'l':
+            isPrintFilenameOnly = true;
+            break;
+        case 'i':
+            isCaseInsensitive = true;
+            break;
+        case 'v':
+            isInvert = true;
+            break;
+        case 'x':
+            isMatchLine = true;
+            break;
+        default:
+            break;
+    }
+})
 
 // function to read file
 const readFile = (filename) => {
@@ -65,16 +88,25 @@ files.map((filename) => {
     let content = fileContent.toString().split(/\n/);
     let match = '';
     content.map((line, index) => {
+        // print line number
         if (line.includes(patterns[0])) {
-            if (doPrintFilenameOnly) {
-                match = match.concat(filename);
-            } else {
-                if (doPrintLine) {
-                    match = match + (index + 1) + ':';
-                }
-                match = match.concat(line);
-            match = match.concat('\n')
-            }
+
+            match = isInvert ? match :
+                isPrintFilenameOnly ? match.concat(filename) :
+                    isPrintLine ? match.concat((index + 1) + ':' + line + '\n') :
+                        match.concat(line + '\n');
+
+            // if (isPrintFilenameOnly) {
+            //     match = match.concat(filename);
+            // } else {
+            //     match = match.concat(line + '\n');
+            // }
+        } else {
+            // match = isPrintLine ? match.concat((index + 1) + ':') : match;
+            // match = isInvert ? match.concat(line + '\n') : match;
+
+            match = isInvert ? isPrintLine ? match.concat((index + 1) + ':' + line + '\n') : match.concat(line + '\n') : match
+
         }
     })
     console.log('match: ', match)
