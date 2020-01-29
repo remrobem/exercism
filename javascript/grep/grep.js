@@ -1,27 +1,5 @@
 #!/usr/bin/env node
-
-// The above line is a shebang. On Unix-like operating systems, or environments, this will allow the script to be
-// run by node, and thus turn this JavaScript file into an executable. If you don't have a Unix-like operating
-// system or environment, for example Windows without WSL, you can use 
-//
-// node grep.js args
-//
-// Instead of "./grep.js args".
-// 
-// Read more about shebangs here: https://en.wikipedia.org/wiki/Shebang_(Unix)
-// 
-// This is only a SKELETON file for the 'Grep' exercise. It's been provided as a
-// convenience to get you started writing code faster.
-//
-
-// For example, running `grep -l -v "hello" file1.txt file2.txt` should
-// print the names of files that do not contain the string "hello".
-
-// - `-n` Print the line numbers of each matching line.
-// - `-l` Print only the names of files that contain at least one matching line.
-// - `-i` Match line using a case-insensitive comparison.
-// - `-v` Invert the program -- collect all lines that fail to match the pattern.
-// - `-x` Only match entire lines, instead of lines that contain a match.
+// fs and path used to read files
 const fs = require('fs');
 const path = require('path');
 
@@ -34,19 +12,14 @@ const parameters = process.argv.filter((_, index) => {
 const flags = parameters.filter(flag => {
     return flag.startsWith('-');
 });
-const files = parameters.filter(flag => {
-    return flag.endsWith('.txt');
+const files = parameters.filter(file => {
+    return file.endsWith('.txt');
 });
-const patterns = parameters.filter(flag => {
-    return (!flag.startsWith('-') && !flag.endsWith('.txt'));
+let patterns = parameters.filter(pattern => {
+    return (!pattern.startsWith('-') && !pattern.endsWith('.txt'));
 });
 
-
-// - `-n` Print the line numbers of each matching line.
-// - `-l` Print only the names of files that contain at least one matching line.
-// - `-i` Match line using a case-insensitive comparison.
-// - `-v` Invert the program -- collect all lines that fail to match the pattern.
-// - `-x` Only match entire lines, instead of lines that contain a match.
+// activate flag variable for the the parameters passed in
 let isPrintLine = false;
 let isPrintFilenameOnly = false;
 let isCaseInsensitive = false;
@@ -76,53 +49,69 @@ flags.map(flag => {
     }
 })
 
+// remove inconsistent requests
+// do not print line number if request if for print Filename only
+isPrintLine = isPrintFilenameOnly ? false : isPrintLine;
+
+// need to aways print file name if there are multiple files 
+let isPrintFileName = files.length > 1 ? true : false;
+
 // function to read file
 const readFile = (filename) => {
     var contents = fs.readFileSync(filename);
     return contents;
 };
 
+// convert the patterns into regex
+const regexes = patterns.map(pattern => {
+    // build regex expression 
+    return isCaseInsensitive ?
+        // case insensitive 
+        isMatchLine ? RegExp('^' + pattern + '$', 'i') : RegExp(pattern, 'i')
+        // case sensitive
+        : isMatchLine ? RegExp('^' + pattern + '$', 'i') : RegExp(pattern);
+});
+
+let matches = [];
+
 files.map((filename) => {
     const filePath = path.resolve(process.cwd(), 'data', filename);
     let fileContent = readFile(filePath);
+    // file content will be processed here as an array
     let content = fileContent.toString().split(/\n/);
     let match = '';
+
     content.map((line, index) => {
-        // print line number
-        if (line.includes(patterns[0])) {
+        regexes.map(regex => {
+            // determine if line matches regex - 
+            // when invert is requested, no match becomes match and vice versa
+            line = regex.test(line) ?
+                //match
+                isInvert ? '' : line :
+                // no match
+                isInvert ? line : '';
 
-            match = isInvert ? match :
-                isPrintFilenameOnly ? match.concat(filename) :
-                    isPrintLine ? match.concat((index + 1) + ':' + line + '\n') :
-                        match.concat(line + '\n');
-
-            // if (isPrintFilenameOnly) {
-            //     match = match.concat(filename);
-            // } else {
-            //     match = match.concat(line + '\n');
-            // }
-        } else {
-            // match = isPrintLine ? match.concat((index + 1) + ':') : match;
-            // match = isInvert ? match.concat(line + '\n') : match;
-
-            match = isInvert ? isPrintLine ? match.concat((index + 1) + ':' + line + '\n') : match.concat(line + '\n') : match
-
+            // format output when get a match (line has a value)
+            if (line) {
+                if (isPrintFilenameOnly) {
+                    match = matches.includes(filename) ? match : match.concat(filename)
+                } else {
+                    if (isPrintFileName) {
+                        match = match.concat(filename + ':')
+                    }
+                    if (isPrintLine) {
+                        match = match.concat((index + 1) + ':')
+                    }
+                    match = match.concat(line);
+                }
+            }
+        });
+        // populate matches array when match found
+        if (match) {
+            matches.push(match.toString());
+            match = '';
         }
     })
-    console.log('match: ', match)
-
 })
 
-
-
-
-
-
-
-// var data= fileread("abc.txt");
-// //module.exports.say =say;
-// //data.say();
-// console.log(data.toString());
-
-
-
+console.log(matches.join('\n'));
