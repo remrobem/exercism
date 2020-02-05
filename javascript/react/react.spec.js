@@ -44,7 +44,7 @@ describe('React module', () => {
   });
 
 
-  test('compute cells can depend on other compute cells', () => {
+  xtest('compute cells can depend on other compute cells', () => {
     const inputCell = new InputCell(1);
     const timesTwo = new ComputeCell(
       [inputCell],
@@ -67,7 +67,7 @@ describe('React module', () => {
     expect(sum.value).toEqual(96);
   });
 
-  test('compute cells fire callbacks', () => {
+  xtest('compute cells fire callbacks', () => {
     const inputCell = new InputCell(1);
     const output = new ComputeCell(
       [inputCell],
@@ -81,7 +81,7 @@ describe('React module', () => {
     expect(callback.values).toEqual([4]);
   });
 
-  test('callbacks fire only when output values change', () => {
+  xtest('callbacks fire only when output values change', () => {
     const inputCell = new InputCell(1);
     const output = new ComputeCell(
       [inputCell],
@@ -99,7 +99,7 @@ describe('React module', () => {
   });
 
 
-  test('callbacks can be added and removed', () => {
+  xtest('callbacks can be added and removed', () => {
     const inputCell = new InputCell(1);
     const output = new ComputeCell(
       [inputCell],
@@ -126,7 +126,7 @@ describe('React module', () => {
     expect(callback3.values).toEqual([42]);
   });
 
-  test('removing a callback multiple times doesn\'t interfere with other callbacks', () => {
+  xtest('removing a callback multiple times doesn\'t interfere with other callbacks', () => {
     const inputCell = new InputCell(1);
     const output = new ComputeCell(
       [inputCell],
@@ -149,7 +149,7 @@ describe('React module', () => {
     expect(callback2.values).toEqual([3]);
   });
 
-  test('callbacks should only be called once, even if multiple dependencies change', () => {
+  xtest('callbacks should only be called once, even if multiple dependencies change', () => {
     const inputCell = new InputCell(1);
     const plusOne = new ComputeCell(
       [inputCell],
@@ -179,7 +179,7 @@ describe('React module', () => {
     expect(callback1.values).toEqual([10]);
   });
 
-  test('callbacks should not be called if dependencies change but output value doesn\'t change', () => {
+  xtest('callbacks should not be called if dependencies change but output value doesn\'t change', () => {
     const inputCell = new InputCell(1);
     const plusOne = new ComputeCell(
       [inputCell],
