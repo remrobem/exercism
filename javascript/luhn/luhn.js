@@ -5,26 +5,24 @@
 
 export const valid = (string) => {
 
+  // remove whitespace - not used in calculation
   const number = string.replace(/\s/g, '');
-  console.log('1 string:', string, ' number:', number);
 
-
+  // must be all numbers and non single digit numbers
   if (number.match(/[^0-9]/) || number.length < 2) {
     return false;
   }
-  console.log('2 string:', string, ' number:', number);
+
+  // reverse the number string so the every other number (odd index) doubling works
   let sum = 0;
-  number.split('').map((value, index) => {
-    // let value = entry;
-    console.log('1 value:', value, typeof value);
-  
-    value = Number(!index % 2 == 0 ? (value * 2 > 9 ? (value * 2) - 9 : value * 2) : value);
-    console.log('2 value:', value, typeof value);
+  number.split('').reverse().map((value, index) => {
+    value = Number(index % 2 != 0
+      ? (value * 2 > 9
+        ? (value * 2) - 9 : value * 2)
+      : value);
+      // sum the digits as they are being mapped
     sum += value;
-    console.log('sum:', sum);
-
   })
-
+  
   return sum % 10 == 0 ? true : false;
-  // throw new Error("Remove this statement and implement this function");
 };

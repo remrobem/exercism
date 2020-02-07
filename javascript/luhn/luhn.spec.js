@@ -18,58 +18,58 @@ describe('Luhn', () => {
   });
 
   test('an example should = 80', () => {
-    expect(valid('8569 2478 0383 3437')).toEqual(true);
+    expect(valid('4539 1488 0343 6467')).toEqual(true);
   });
   
   test('a valid Canadian SIN', () => {
     expect(valid('055 444 285')).toEqual(true);
   });
 
-  xtest('invalid Canadian SIN', () => {
+  test('invalid Canadian SIN', () => {
     expect(valid('055 444 286')).toEqual(false);
   });
 
-  xtest('invalid credit card', () => {
+  test('invalid credit card', () => {
     expect(valid('8273 1232 7352 0569')).toEqual(false);
   });
 
-  xtest('valid number with an even number of digits', () => {
+  test('valid number with an even number of digits', () => {
     expect(valid('095 245 88')).toEqual(true);
   });
 
-  xtest('valid number with an odd number of spaces', () => {
+  test('valid number with an odd number of spaces', () => {
     expect(valid('234 567 891 234')).toEqual(true);
   });
 
-  xtest('valid strings with a non-digit added at the end invalid', () => {
+  test('valid strings with a non-digit added at the end invalid', () => {
     expect(valid('059a')).toEqual(false);
   });
 
-  xtest('valid strings with punctuation included become invalid', () => {
+  test('valid strings with punctuation included become invalid', () => {
     expect(valid('055-444-285')).toEqual(false);
   });
 
-  xtest('valid strings with symbols included become invalid', () => {
+  test('valid strings with symbols included become invalid', () => {
     expect(valid('055# 444$ 285')).toEqual(false);
   });
 
-  xtest('single zero with space is invalid', () => {
+  test('single zero with space is invalid', () => {
     expect(valid(' 0')).toEqual(false);
   });
 
-  xtest('more than a single zero is valid', () => {
+  test('more than a single zero is valid', () => {
     expect(valid('0000 0')).toEqual(true);
   });
 
-  xtest('input digit 9 is correctly converted to output digit 9', () => {
+  test('input digit 9 is correctly converted to output digit 9', () => {
     expect(valid('091')).toEqual(true);
   });
 
-  xtest('using ascii value for non-doubled non-digit isn\'t allowed', () => {
+  test('using ascii value for non-doubled non-digit isn\'t allowed', () => {
     expect(valid('055b 444 285')).toEqual(false);
   });
 
-  xtest('using ascii value for doubled non-digit isn\'t allowed', () => {
+  test('using ascii value for doubled non-digit isn\'t allowed', () => {
     expect(valid(':9')).toEqual(false);
   });
 });
