@@ -8,21 +8,21 @@ describe('Rectangles', () => {
     expect(actual).toEqual(expected);
   });
 
-  xtest('no columns', () => {
+  test('no columns', () => {
     const expected = 0;
     const actual = Rectangles.count(['']);
 
     expect(actual).toEqual(expected);
   });
 
-  xtest('no rectangles', () => {
+  test('no rectangles', () => {
     const expected = 0;
     const actual = Rectangles.count([' ']);
 
     expect(actual).toEqual(expected);
   });
 
-  xtest('one rectangle', () => {
+  test('one rectangle', () => {
     const expected = 1;
     const actual = Rectangles.count([
       '+-+',
@@ -116,7 +116,7 @@ describe('Rectangles', () => {
     expect(actual).toEqual(expected);
   });
 
-  xtest('corner is required for a rectangle to be complete', () => {
+  test('corner is required for a rectangle to be complete', () => {
     const expected = 2;
     const actual = Rectangles.count([
       '+------+----+',
@@ -129,7 +129,7 @@ describe('Rectangles', () => {
     expect(actual).toEqual(expected);
   });
 
-  xtest('large input with many rectangles', () => {
+  test('large input with many rectangles', () => {
     const expected = 60;
     const actual = Rectangles.count([
       '+---+--+----+',
