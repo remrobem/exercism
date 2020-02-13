@@ -59,6 +59,19 @@ describe('Rectangles', () => {
     expect(actual).toEqual(expected);
   });
 
+  test('seperated rectangle ', () => {
+    const expected = 4;
+    const actual = Rectangles.count([
+      '     +-+',
+      '     | |',
+      '+-+  +-+',
+      '| |  | |',
+      '+-+  +-+',
+    ]);
+
+    expect(actual).toEqual(expected);
+  });
+
   test('rectangle of height 1 is counted', () => {
     const expected = 1;
     const actual = Rectangles.count([
