@@ -1,5 +1,3 @@
-
-// class Rectangles {
 export class Rectangles {
   static count(array) {
     if (array.length == 0) {
@@ -61,64 +59,3 @@ export class Rectangles {
     }
   }
 }
-// console.log('Answer: ', Rectangles.count([
-//   '  +-+',
-//   '  | |',
-//   '  +-+',
-//   '  +-+',
-//   '  | |',
-//   '  +-+',
-// ])
-// );
-
-// console.log('Answer: ', Rectangles.count([
-//   '  +-+',
-//   '  | |',
-//   '+-+-+',
-//   '| | |',
-//   '+-+-+',
-// ])
-// );
-
-// console.log('Answer: ', Rectangles.count([
-//   '  +-+',
-//   '    |',
-//   '+-+-+',
-//   '| | -',
-//   '+-+-+',
-// ])
-// );
-
-
-// const expected = 3;
-// console.log('Answer: ', Rectangles.count([
-//   '+------+----+',
-//   '|      |    |',
-//   '+---+--+    |',
-//   '|   |       |',
-//   '+---+-------+',
-// ])
-// );
-
-// const expected = 2;
-// console.log('Answer: ', Rectangles.count([
-//   '  +-+',
-//   '  | |',
-//   '+-+-+',
-//   '| |  ',
-//   '+-+  ',
-// ])
-// );
-
-// expected = 60;
-// console.log('Answer: ', Rectangles.count([
-//   '+---+--+----+',
-//   '|   +--+----+',
-//   '+---+--+    |',
-//   '|   +--+----+',
-//   '+---+--+--+-+',
-//   '+---+--+--+-+',
-//   '+------+  | |',
-//   '          +-+',
-// ])
-// );
