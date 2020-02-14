@@ -59,7 +59,7 @@ describe('Rectangles', () => {
     expect(actual).toEqual(expected);
   });
 
-  test('seperated rectangle ', () => {
+  test('separated rectangle, same size as other rectangle ', () => {
     const expected = 4;
     const actual = Rectangles.count([
       '     +-+',
@@ -67,6 +67,37 @@ describe('Rectangles', () => {
       '+-+  +-+',
       '| |  | |',
       '+-+  +-+',
+    ]);
+
+    expect(actual).toEqual(expected);
+  });
+
+  test('separated rectangles, different sizes ', () => {
+    const expected = 3;
+    const actual = Rectangles.count([
+      '     +-+',
+      '     | |',
+      '     +-+',
+      '+-+     ',
+      '+-+     ',
+      '  +---+ ',
+      '  |   | ',
+      '  +---+ ',
+    ]);
+
+    expect(actual).toEqual(expected);
+  });
+
+  test('separated rectangle, different size of other rectangle ', () => {
+    const expected = 4;
+    const actual = Rectangles.count([
+      '     +-+',
+      '     | |',
+      '     +-+',
+      '+-+  | |',
+      '| |  | |',
+      '+-+  | |',
+      '     +-+',
     ]);
 
     expect(actual).toEqual(expected);
