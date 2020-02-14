@@ -11,46 +11,47 @@ export class Rectangles {
 
     function findMatchByColumn(rectangles) {
       let matches = 0;
-      let topSide = '';
-      rectangles.map((row, rowIndex) => {
-        row.map((_, columnIndex) => {
-          // look for a line representing top of a rectangle, will have + on each end and - or + in between
-          // this wioll find all rectangles where the string is the top
-          for (let i = columnIndex; i < row.length && (row[i] == '+' || row[i] == '-'); i++) {
-            topSide += row[i];
+      let top = '';
+      // search each row for a string that represents the top row of a rectangle (+ on both ends)
+      // When found, search every row below for valid sides to a rectangle and then bottom(s) of a rectangle
+      // the string found may be the top of multiple rectangles
+      // and the row may contain the top of more than one rectangle
+      rectangles.map((row, topRow) => {
+        row.map((_, topColumn) => {
+          for (let i = topColumn; i < row.length && (row[i] == '+' || row[i] == '-'); i++) {
+            top += row[i];
             // when find end of a top line for a rectangle, find any/all of the bottoms of a rectangle
-            matches = topSide.length > 1 && row[i] == '+'
-              ? matches + countMatchingBottom(topSide, rowIndex, columnIndex, rectangles)
+            matches = top.length > 1 && row[i] == '+'
+              ? matches + countMatchingBottoms(top, topRow, topColumn, rectangles)
               : matches
           }
-          topSide = '';
+          top = '';
         })
       })
       return matches;
     }
 
-    // a potential top of a recatngle has been found, need to find any/all the bottoms
-    function countMatchingBottom(topSide, rowIndex, columnIndex, rectangles) {
-      const matchSide = formatSide(topSide);
+    // a potential top of a rectangle has been found, need to find any/all the bottoms
+    function countMatchingBottoms(top, topRow, topColumn, rectangles) {
+      const topSide = formatSide(top);
       let matches = 0;
-      let rectangleRowCompare = '';
+      let rowCompare = '';
       // for each row, get string from same column and length and compare to top of rectangle
-      for (let row = rowIndex + 1; row < rectangles.length; row++) {
-        rectangleRowCompare = formatSide(rectangles[row]
+      for (let row = topRow + 1; row < rectangles.length; row++) {
+        rowCompare = formatSide(rectangles[row]
           .join('')
-          .slice(columnIndex, columnIndex + matchSide.length)
+          .slice(topColumn, topColumn + topSide.length)
         );
-
-        // ends/sides of a rectangle between top and bottom must be + or -
-        if (!['+', '|'].includes(rectangleRowCompare[0]) || !['+', '|'].includes(rectangleRowCompare[rectangleRowCompare.length - 1])) {
+        // ends/sides of a rectangle must be + or |
+        if (!['+', '|'].includes(rowCompare[0]) || !['+', '|'].includes(rowCompare[rowCompare.length - 1])) {
           break;
         }
-        matches = rectangleRowCompare == matchSide ? matches + 1 : matches;
+        matches = rowCompare == topSide ? matches + 1 : matches;
       }
       return matches;
     }
 
-    // change imbedded (not first or last) + to - to handle top/bottom with rectangles of different sizes
+    // change imbedded (not first or last) + to - to handle top/bottom with + as the corner of another rectangle
     function formatSide(side) {
       return side
         .split('')
