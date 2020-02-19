@@ -17,7 +17,8 @@ export const largestProduct = (number, span) => {
   // number into an array, loop and calculate product for all spans svaine the largest product
   let largest = 0;
   let numbers = number.split('');
-  for (let i = 0; i < number.length - 1; i++) {
+
+  for (let i = 0; i < numbers.length - 1; i++) {
     let current = 1;
     for (let j = i; j <= span + i - 1; j++) {
       current = current * numbers[j];
