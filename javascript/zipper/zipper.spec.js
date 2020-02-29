@@ -31,15 +31,15 @@ describe('Zipper', () => {
     expect(zipper.toTree()).toEqual(t1);
   });
 
-  xtest('left, right and value', () => {
+  test('left, right and value', () => {
     expect(zipper.left().right().value()).toEqual(3);
   });
 
-  xtest('dead end', () => {
+  test('dead end', () => {
     expect(zipper.left().left()).toBe(null);
   });
 
-  xtest('tree from deep focus', () => {
+  test('tree from deep focus', () => {
     expect(zipper.left().right().toTree()).toEqual(t1);
   });
 

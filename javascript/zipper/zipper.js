@@ -1,26 +1,52 @@
+//
+// This is only a SKELETON file for the 'Zipper' exercise. It's been provided as a
+// convenience to get you started writing code faster.
+//
+
 export class Zipper {
-  constructor() {
-    throw new Error("Remove this statement and implement this function");
+  // constructor(value, left, right) {
+  //   this.value = value;
+  //   this.left = left;
+  //   this.right = right;
+  //   // throw new Error("Remove this statement and implement this function");
+  // }
+  constructor(bt, parent = null) {
+    this.bt = bt;
+    this.parent = parent ? parent : bt;
   }
 
-  static fromTree() {
-    throw new Error("Remove this statement and implement this function");
+  static fromTree(bt) {
+    this.bt = bt;
+    console.log('fromTree: ', this.bt);
+    return new Zipper(bt);
   }
 
   toTree() {
-    throw new Error("Remove this statement and implement this function");
+    // return this.parent;
+    return this.parent;
   }
 
   value() {
-    throw new Error("Remove this statement and implement this function");
+    console.log('value: ', this.bt.value);
+    return this.bt.value;
   }
 
   left() {
-    throw new Error("Remove this statement and implement this function");
+    console.log(Object.entries(this.bt)[0]);
+    // this.bt.left.parent = Object.entries(this.bt)[0];
+    console.log('left: ', this.bt);
+    console.log('this: ', this)
+
+    return this.bt.left
+      ? new Zipper(this.bt.left, this.bt)
+      : null;
   }
 
   right() {
-    throw new Error("Remove this statement and implement this function");
+    console.log('right: ', this.bt);
+    return this.bt.right
+      ? new Zipper(this.bt.right, this.bt)
+      : null;
   }
 
   up() {
