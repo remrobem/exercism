@@ -43,39 +43,40 @@ describe('Zipper', () => {
     expect(zipper.left().right().toTree()).toEqual(t1);
   });
 
-  xtest('traversing up from top', () => {
+  test('traversing up from top', () => {
     expect(zipper.up()).toEqual(null);
   });
 
-  xtest('left, right and up', () => {
+  test('left, right and up', () => {
     expect(zipper.left().up().right().up()
       .left()
       .right()
       .value()).toEqual(3);
   });
 
-  xtest('setValue', () => {
+  test('setValue', () => {
     expect(zipper.left().setValue(5).toTree()).toEqual(t2);
   });
 
-  xtest('setValue after traversing up', () => {
+  test('setValue after traversing up', () => {
     expect(zipper.left().right().up().setValue(5)
       .toTree()).toEqual(t2);
   });
 
-  xtest('setLeft with leaf', () => {
+  test('setLeft with leaf', () => {
     expect(zipper.left().setLeft(leaf(5)).toTree()).toEqual(t3);
   });
 
-  xtest('setRight with null', () => {
+  test('setRight with null', () => {
     expect(zipper.left().setRight(null).toTree()).toEqual(t4);
   });
 
-  xtest('setRight with subtree', () => {
+  test('setRight with subtree', () => {
     expect(zipper.setRight(bt(6, leaf(7), leaf(8))).toTree()).toEqual(t5);
   });
 
-  xtest('setValue on deep focus', () => {
+  test('setValue on deep focus', () => {
+    console.log('test: ', zipper.left().right().setValue(5).toTree())
     expect(zipper.left().right().setValue(5).toTree()).toEqual(t6);
   });
 });

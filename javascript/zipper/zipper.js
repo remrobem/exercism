@@ -4,64 +4,59 @@
 //
 
 export class Zipper {
-  // constructor(value, left, right) {
-  //   this.value = value;
-  //   this.left = left;
-  //   this.right = right;
-  //   // throw new Error("Remove this statement and implement this function");
-  // }
   constructor(bt, parent = null) {
     this.bt = bt;
-    this.parent = parent ? parent : bt;
+    this.parent = parent;
   }
 
   static fromTree(bt) {
-    this.bt = bt;
-    console.log('fromTree: ', this.bt);
     return new Zipper(bt);
   }
 
   toTree() {
-    // return this.parent;
-    return this.parent;
+    // console.log('toTree ', JSON.stringify(this));
+    return this.parent
+      ? this.parent.toTree()
+      : this.bt;
   }
 
   value() {
-    console.log('value: ', this.bt.value);
     return this.bt.value;
   }
 
   left() {
-    console.log(Object.entries(this.bt)[0]);
-    // this.bt.left.parent = Object.entries(this.bt)[0];
-    console.log('left: ', this.bt);
-    console.log('this: ', this)
-
     return this.bt.left
-      ? new Zipper(this.bt.left, this.bt)
+      ? new Zipper(this.bt.left, this)
       : null;
   }
 
   right() {
-    console.log('right: ', this.bt);
     return this.bt.right
-      ? new Zipper(this.bt.right, this.bt)
+      ? new Zipper(this.bt.right, this)
       : null;
   }
 
   up() {
-    throw new Error("Remove this statement and implement this function");
+    // console.log('up: ', this)
+    return this.parent;
   }
 
-  setValue() {
-    throw new Error("Remove this statement and implement this function");
+  setValue(value) {
+    this.bt.value = value;
+    return new Zipper(this.bt, this.parent)
   }
 
-  setLeft() {
-    throw new Error("Remove this statement and implement this function");
+  setLeft(node) {
+    console.log('1. setLeft: ', this.bt);
+    console.log('node: ', node)
+    this.bt.left = node;
+    console.log('2. setLeft: ', this.bt);
+    return new Zipper(this.bt, this.parent)
   }
 
-  setRight() {
-    throw new Error("Remove this statement and implement this function");
+  setRight(node) {
+    this.bt.right = node;
+    return new Zipper(this.bt, this.parent)
+
   }
 }
