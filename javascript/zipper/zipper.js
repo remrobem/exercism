@@ -1,7 +1,3 @@
-//
-// This is only a SKELETON file for the 'Zipper' exercise. It's been provided as a
-// convenience to get you started writing code faster.
-//
 
 export class Zipper {
   constructor(bt, parent = null) {
@@ -9,12 +5,12 @@ export class Zipper {
     this.parent = parent;
   }
 
+  // deep copy so all sub-objects copied correctly
   static fromTree(bt) {
-    return new Zipper(bt);
+    return new Zipper(JSON.parse(JSON.stringify(bt)));
   }
 
   toTree() {
-    // console.log('toTree ', JSON.stringify(this));
     return this.parent
       ? this.parent.toTree()
       : this.bt;
@@ -37,7 +33,6 @@ export class Zipper {
   }
 
   up() {
-    // console.log('up: ', this)
     return this.parent;
   }
 
@@ -47,10 +42,7 @@ export class Zipper {
   }
 
   setLeft(node) {
-    console.log('1. setLeft: ', this.bt);
-    console.log('node: ', node)
     this.bt.left = node;
-    console.log('2. setLeft: ', this.bt);
     return new Zipper(this.bt, this.parent)
   }
 

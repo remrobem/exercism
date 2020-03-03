@@ -76,7 +76,6 @@ describe('Zipper', () => {
   });
 
   test('setValue on deep focus', () => {
-    console.log('test: ', zipper.left().right().setValue(5).toTree())
     expect(zipper.left().right().setValue(5).toTree()).toEqual(t6);
   });
 });
