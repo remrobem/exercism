@@ -1,75 +1,78 @@
 export const abilityModifier = (score) => {
 
-  if (score < 3) {
-    throw new Error('Ability scores must be at least 3');
+  switch (true) {
+    case score < 3:
+      throw new Error('Ability scores must be at least 3');
+
+    case score > 18:
+      throw new Error('Ability scores can be at most 18');
+
+    default:
+      return Math.floor((score - 10) / 2);
   }
-
-  if (score > 18) {
-    throw new Error('Ability scores can be at most 18');
-  }
-
-  return Math.floor((score - 10) / 2)
-
 };
 
 export class Character {
-  static rollAbility() {
 
-    // create array with 4 entries, populate with randopm numbers, sum the 3 highest random numbers
-    return Number(Array(4)
+  constructor() {
+    const hitpointAddition = 10;
+    this._strength = Character.rollAbility();
+    this._dexterity = Character.rollAbility();
+    this._constitution = Character.rollAbility();
+    this._intelligence = Character.rollAbility();
+    this._wisdom = Character.rollAbility();
+    this._charisma = Character.rollAbility();
+    this._hitpoints = abilityModifier(this._constitution) + hitpointAddition;
+  }
+
+
+  static rollAbility() {
+    // array with 4 entries, each gets random number, remove entry with lowest value, sum the remaining 3 values
+    return Array(4)
       .fill('')
-      .map(_ => {
-        return Math.floor((Math.random() * 6) + 1)
-      })
-      .sort((a, b) => a - b)
+      .map(Character.RANDOM_NUMBER)
+      .sort(Character.SORT_ASC)
       .slice(1)
-      .reduce((sum, roll) => { return sum += roll })
-    )
+      .reduce(Character.SUM)
+  }
+
+  static RANDOM_NUMBER() {
+    return Math.floor((Math.random() * 6) + 1)
+  }
+
+  static SORT_ASC(a, b) {
+    return a - b
+  }
+
+  static SUM(sum, roll) {
+    return sum += roll;
   }
 
   get strength() {
-    console.log('strength: ', this.rollAbility)
-    return this.rollAbility
-    // throw new Error("Remove this statement and implement this function");
+    return this._strength;
   }
 
   get dexterity() {
-    return this.rollAbility
-
-    // throw new Error("Remove this statement and implement this function");
+    return this._dexterity;
   }
 
   get constitution() {
-    return this.rollAbility
-
-    // throw new Error("Remove this statement and implement this function");
+    return this._constitution
   }
 
   get intelligence() {
-    return this.rollAbility
-
-    // throw new Error("Remove this statement and implement this function");
+    return this._intelligence;
   }
 
   get wisdom() {
-    return this.rollAbility
-
-    // throw new Error("Remove this statement and implement this function");
+    return this._wisdom;
   }
 
   get charisma() {
-    return this.rollAbility
-
-    // throw new Error("Remove this statement and implement this function");
+    return this._charisma;
   }
 
   get hitpoints() {
-    // Your character's initial hitpoints are 10 + your character's constitution modifier. 
-    // You find your character's constitution modifier by subtracting 10 from your character's constitution, divide by 2 and round down.
-
-    let constitutionModifier = Math.floor((this.constitution - 10) / 2);
-    return constitutionModifier + 10;
-
-    // throw new Error("Remove this statement and implement this function");
+    return this._hitpoints;
   }
 }
