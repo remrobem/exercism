@@ -1,79 +1,41 @@
-/* eslint-disable no-fallthrough */
-//
-// This is only a SKELETON file for the 'Roman Numerals' exercise. It's been provided as a
-// convenience to get you started writing code faster.
-//
-
-// I = 1
-// V = 5
-// X = 10
-// L = 50
-// C = 100
-// D = 500
-// M = 1000
 
 export const toRoman = (decimal) => {
 
-  const digits = Array.from(String(decimal), Number);
-  const digitsLength = digits.length
-  let ones = 0;
-  let tens = 0;
-  let hundreds = 0;
-  let thousands = 0;
+  const romanNumerals = ['I', 'V', 'X', 'L', 'C', 'D', 'M', '?', '?'];
+  let result = [];
 
-  switch (true) {
-    case digitsLength > 0:
-      ones = digits[digitsLength - 1];
-    case digitsLength > 1:
-      tens = digits[digitsLength - 2]
-    case digitsLength > 2:
-      hundreds = digits[digitsLength - 3]
-    case digitsLength > 3:
-      thousands = digits[digitsLength - 4]
+  // array of decimal numbers reversed so in sequence of ones, tens, hundreds,....
+  const digits = Array.from(String(decimal), Number).reverse();
+
+  // covert each decimal digit to a roman numberal
+  digits.map((digit, index) => {
+    convertToRomanNumeral(index, digit);
+  });
+
+  return result.reverse().join('');
+
+  // convert decimal digit to roman numeral. Needs to use the next highest 5,50,500 and next highest 10, 100, 1000
+  function convertToRomanNumeral(position, count) {
+
+    let char = romanNumerals[position * 2];
+    let fiveChar = romanNumerals[(position * 2) + 1];
+    let tenChar = romanNumerals[(position * 2) + 2];
+
+    let romanNumeral = '';
+
+    count === 9
+      ? romanNumeral = pushToRomanNumerals(char + tenChar, 1)
+      : count >= 5
+        ? romanNumeral = pushToRomanNumerals(fiveChar, 1).concat(pushToRomanNumerals(char, count - 5))
+        : count === 4
+          ? romanNumeral = pushToRomanNumerals(char + fiveChar, 1)
+          : romanNumeral = pushToRomanNumerals(char, count)
+
+    result.push(romanNumeral)
   }
-  console.log(digits)
-  console.log(ones, tens, hundreds, thousands);
 
-  let romanNumerals = [];
-
-  switch (true) {
-    case thousands > 0:
-      for (let i = 0; i < thousands; i++) {
-        romanNumerals.push('M');
-      }
-
-    case hundreds > 0:
-      if (hundreds >= 5) {
-        romanNumerals.push('D');
-        hundreds -= 5;
-      }
-      for (let i = 0; i < hundreds; i++) {
-        romanNumerals.push('C');
-      }
-    case tens > 0:
-      if (tens >= 5) {
-        romanNumerals.push('L');
-        tens -= 5;
-      }
-      for (let i = 0; i < tens; i++) {
-        romanNumerals.push('X');
-      }
-    case ones > 0:
-      if (ones >= 5) {
-        romanNumerals.push('V');
-        ones -= 5;
-      }
-      for (let i = 0; i < ones; i++) {
-        romanNumerals.push('I');
-      }
-
-
-    default:
-      break;
+  // create string of repeating roman numerals
+  function pushToRomanNumerals(char, count) {
+    return Array(count).fill(char).join('');
   }
-  console.log(romanNumerals)
-
-  return romanNumerals.join('');
-
-  // throw new Error("Remove this statement and implement this function");
 };
