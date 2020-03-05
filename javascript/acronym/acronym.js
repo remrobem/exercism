@@ -1,6 +1,6 @@
 
 export const parse = (phrase) => {
-  // remove any non-alpha except - and whitespace, get words and extract first letter of each word
+  // remove any non-alpha except - and whitespace, get words, extract first letter and convert to uppercase
   return phrase
     .replace(/[^a-z\-\s]/gi, '')
     .match(/\b(\w+)\b/g)
