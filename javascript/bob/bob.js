@@ -1,12 +1,7 @@
 export const hey = (message) => {
 
   // remove whitespace, tab, newline,....
-  const compressedMessage = message.replace(/(?:\s)/g, '');
-
-  // empty string
-  if (compressedMessage.length === 0) {
-    return 'Fine. Be that way!';
-  }
+  const compressedMessage = message.replace(/\s/g,'');
 
   // check for question - end with ?
   const isQuestion = compressedMessage.endsWith('?');
@@ -16,11 +11,22 @@ export const hey = (message) => {
     compressedMessage.toUpperCase() == compressedMessage ? true : false
     : false;
 
+  if (compressedMessage.length === 0) {
+    return "Fine. Be that way!";
+  }
 
-  // return appropriate answer
-  return ((isQuestion && isYelling) ? "Calm down, I know what I'm doing!"
-    : isQuestion ? 'Sure.'
-      : isYelling ? 'Whoa, chill out!'
-        : 'Whatever.'
-  )
+  if (isQuestion && isYelling) {
+    return "Calm down, I know what I'm doing!";
+  }
+
+  if (isQuestion) {
+    return "Sure.";
+  }
+
+  if (isYelling) {
+    return "Whoa, chill out!";
+  }
+
+  return "Whatever."
+
 };
