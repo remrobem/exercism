@@ -13,16 +13,18 @@ export const rows = (count) => {
     // format next row
     let newRow = [];
 
-    // build 
+    // populate new (next) row from the row just added to the triangle
     nextRow.map((num, i) => {
       i === 0 ? newRow.push(1) : (newRow.push(num + nextRow[i - 1]));
     });
+
     // add the ending 1 to the next row
     newRow.push(1);
-
+    // save the row for the next entry into the triangle (if needed)
     nextRow = [];
     nextRow.push(...newRow);
 
   }
+
   return triangle;
 };
