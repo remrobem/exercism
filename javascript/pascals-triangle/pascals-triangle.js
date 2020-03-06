@@ -6,9 +6,7 @@ export const rows = (count) => {
   for (let i = 0; i < count; i++) {
 
     // push the next row to the returned array (triangle)
-    if (nextRow.length > 0) {
-      triangle.push(nextRow);
-    }
+    triangle.push(nextRow);
 
     // format next row
     let newRow = [];
