@@ -1,17 +1,11 @@
 export const hey = (message) => {
 
-  // remove whitespace, tab, newline,....
-  const compressedMessage = message.replace(/\s/g,'');
+  const msg = message.replace(/\s/g, '');
+  const isYelling = yelling(msg);
+  const isQuestion = msg.endsWith('?');
+  const isSilent = silent(msg);
 
-  // check for question - end with ?
-  const isQuestion = compressedMessage.endsWith('?');
-
-  // check for yelling  - if any letters exist, they must all be uppercase
-  let isYelling = compressedMessage.search(/[A-Za-z]/) >= 0 ?
-    compressedMessage.toUpperCase() == compressedMessage ? true : false
-    : false;
-
-  if (compressedMessage.length === 0) {
+  if (isSilent) {
     return "Fine. Be that way!";
   }
 
@@ -28,5 +22,17 @@ export const hey = (message) => {
   }
 
   return "Whatever."
+
+  // check for yelling  - if any letters exist, they must all be uppercase
+  function yelling(message) {
+    return message.search(/[A-Za-z]/) >= 0 ?
+      message.toUpperCase() == message ? true : false
+      : false;
+  }
+
+  // silent when no characters in message
+  function silent(message) {
+    return message.length === 0
+  }
 
 };
