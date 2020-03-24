@@ -66,7 +66,7 @@ export class Song {
       // only push to verses array if in the range of verses to return
       if (index + 1 >= from && index + 1 <= to) {
 
-        verses.push(firstLine + animal.animal + '.\n');
+        verses.push(`${firstLine}${animal.animal}.\n`);
 
         if (animal.line1) verses.push(animal.line1);
 
@@ -76,7 +76,7 @@ export class Song {
           let append = animals[i].line2 || '';
           i === 0 ?
             verses.push(append) :
-            verses.push('She swallowed the ' + animals[i].animal + ' to catch the ' + animals[i - 1].animal + append + '.\n');
+            verses.push(`She swallowed the ${animals[i].animal} to catch the ${animals[i - 1].animal}${append}.\n`);
         }
 
         // blank line between verses only when more than 1 verse requested
