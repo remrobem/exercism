@@ -1,5 +1,3 @@
-//
-
 export class Say {
   inEnglish(number) {
     // number must be in allowed range
@@ -51,7 +49,6 @@ export class Say {
 
         default:
           throw new Error('Number must be between 0 and 999,999,999,999.');
-          break;
       }
     }
 
