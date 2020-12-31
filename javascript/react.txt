@@ -29,7 +29,3 @@ class ComputeCell  {
 }
 
 export { InputCell, ComputeCell }
-
-
-
-tnolanmartin@gmail.com
