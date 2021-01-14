@@ -1,39 +1,30 @@
 export class GradeSchool {
+  // grade => [students]
   #roster = new Map([]);
 
   roster() {
-    return this.buildRoster()
+    const roster = {};
+    for (let [key, value] of this.#roster) {
+      roster[key] = [...value];
+    }
+    return roster;
   }
-
-  buildRoster() {
-    let roster = {};
-     for (let [key, value] of this.#roster) {
-       roster[key] = value;
-     }
-     return roster;
-   }
 
   add(student, grade) {
 
-    this.removeStudentFromExistingGrade(student);
-    
-    const students = this.#roster.get(grade);
+    this.removeStudentFromOtherGrades(student);
 
-    if (students) {
-      students.push(student);
-      students.sort();
-      this.#roster.set(grade, students);
-    } else {
-      this.#roster.set(grade, [student]);
-    }
+    const studentsInGrade = this.#roster.get(grade) || [];
+    studentsInGrade.push(student);
+    this.#roster.set(grade, studentsInGrade.sort());
+    
   }
 
   grade(grade) {
-    return this.#roster.get(grade) || [];
+    return [...(this.#roster.get(grade) || [])];
   }
 
-  removeStudentFromExistingGrade(student) {
-   
+  removeStudentFromOtherGrades(student) {
     for (let [key, value] of this.#roster) {
       // filter out the student if the student already exists
       let students = value.filter((name) => {
@@ -47,26 +38,3 @@ export class GradeSchool {
     }
   }
 }
-
-
-
-  // const invertBy = obj => Object.entries(obj).reduce((inverted, [key, value]) => ({
-  //   ...inverted,
-  //   [value]: [...(inverted[value] ?? []), key].sort()
-  // }), {});
-  
-  // export class GradeSchool {
-  //   #roster = {};
-  
-  //   add(name, grade) {
-  //     this.#roster[name] = grade;
-  //   }
-  
-  //   grade(target) {
-  //     return Object.entries(this.#roster).flatMap(([name, grade]) => grade === target ? name : []).sort();
-  //   }
-  
-  //   roster() {
-  //     return invertBy(this.#roster);
-  //   }
-  // }
