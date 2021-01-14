@@ -14,10 +14,10 @@ export class GradeSchool {
 
     this.removeStudentFromOtherGrades(student);
 
-    const studentsInGrade = this.#roster.get(grade) || [];
+    const studentsInGrade = this.grade(grade);
     studentsInGrade.push(student);
     this.#roster.set(grade, studentsInGrade.sort());
-    
+
   }
 
   grade(grade) {
