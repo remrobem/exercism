@@ -21,7 +21,7 @@ describe('append entries to a list and return the new list', () => {
 });
 
 describe('concat lists and lists of lists into new list', () => {
-  xtest('empty list', () => {
+  test('empty list', () => {
     const list1 = new List();
     const list2 = new List();
     expect(list1.concat(list2).values).toEqual([]);
@@ -38,36 +38,36 @@ describe('concat lists and lists of lists into new list', () => {
 });
 
 describe('filter list returning only values that satisfy the filter function', () => {
-  xtest('empty list', () => {
+  test('empty list', () => {
     const list1 = new List([]);
     expect(list1.filter((el) => el % 2 === 1).values).toEqual([]);
   });
 
-  xtest('non empty list', () => {
+  test('non empty list', () => {
     const list1 = new List([1, 2, 3, 5]);
     expect(list1.filter((el) => el % 2 === 1).values).toEqual([1, 3, 5]);
   });
 });
 
 describe('returns the length of a list', () => {
-  xtest('empty list', () => {
+  test('empty list', () => {
     const list1 = new List();
     expect(list1.length()).toEqual(0);
   });
 
-  xtest('non-empty list', () => {
+  test('non-empty list', () => {
     const list1 = new List([1, 2, 3, 4]);
     expect(list1.length()).toEqual(4);
   });
 });
 
 describe('returns a list of elements whose values equal the list value transformed by the mapping function', () => {
-  xtest('empty list', () => {
+  test('empty list', () => {
     const list1 = new List();
     expect(list1.map((el) => ++el).values).toEqual([]);
   });
 
-  xtest('non-empty list', () => {
+  test('non-empty list', () => {
     const list1 = new List([1, 3, 5, 7]);
     expect(list1.map((el) => ++el).values).toEqual([2, 4, 6, 8]);
   });

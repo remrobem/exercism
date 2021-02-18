@@ -26,16 +26,16 @@ export class List {
     return new List(newList);
   }
 
-  filter() {
-    throw new Error('Remove this statement and implement this function');
+  filter(func) {
+   return new List(this.values.filter(func))
   }
 
-  map() {
-    throw new Error('Remove this statement and implement this function');
+  map(func) {
+   return new List(this.values.map(func))
   }
 
   length() {
-    throw new Error('Remove this statement and implement this function');
+    return this.values.length
   }
 
   foldl() {
