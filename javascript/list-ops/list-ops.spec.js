@@ -74,51 +74,51 @@ describe('returns a list of elements whose values equal the list value transform
 });
 
 describe('folds (reduces) the given list from the left with a function', () => {
-  xtest('empty list', () => {
+  test('empty list', () => {
     const list1 = new List();
     expect(list1.foldl((acc, el) => el * acc, 2)).toEqual(2);
   });
 
-  xtest('direction independent function applied to non-empty list', () => {
+  test('direction independent function applied to non-empty list', () => {
     const list1 = new List([1, 2, 3, 4]);
     expect(list1.foldl((acc, el) => acc + el, 5)).toEqual(15);
   });
 
-  xtest('direction dependent function applied to non-empty list', () => {
+  test('direction dependent function applied to non-empty list', () => {
     const list1 = new List([1, 2, 3, 4]);
     expect(list1.foldl((acc, el) => el / acc, 24)).toEqual(64);
   });
 });
 
 describe('folds (reduces) the given list from the right with a function', () => {
-  xtest('empty list', () => {
+  test('empty list', () => {
     const list1 = new List();
     expect(list1.foldr((acc, el) => el * acc, 2)).toEqual(2);
   });
 
-  xtest('direction independent function applied to non-empty list', () => {
+  test('direction independent function applied to non-empty list', () => {
     const list1 = new List([1, 2, 3, 4]);
     expect(list1.foldr((acc, el) => acc + el, 5)).toEqual(15);
   });
 
-  xtest('direction dependent function applied to non-empty list', () => {
+  test('direction dependent function applied to non-empty list', () => {
     const list1 = new List([1, 2, 3, 4]);
     expect(list1.foldr((acc, el) => el / acc, 24)).toEqual(9);
   });
 });
 
 describe('reverse the elements of a list', () => {
-  xtest('empty list', () => {
+  test('empty list', () => {
     const list1 = new List();
     expect(list1.reverse().values).toEqual([]);
   });
 
-  xtest('non-empty list', () => {
+  test('non-empty list', () => {
     const list1 = new List([1, 3, 5, 7]);
     expect(list1.reverse().values).toEqual([7, 5, 3, 1]);
   });
 
-  xtest('list of lists is not flattened', () => {
+  test('list of lists is not flattened', () => {
     const list1 = new List([[1, 2], [3], [], [4, 5, 6]]);
     expect(list1.reverse().values).toEqual([[4, 5, 6], [], [3], [1, 2]]);
   });
