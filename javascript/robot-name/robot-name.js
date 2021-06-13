@@ -1,21 +1,49 @@
-// This is only a SKELETON file for the 'Robot Name' exercise. It's been
-// provided as a convenience to get your started writing code faster.
+'use strict';
+
+const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+
+function generateRandomLetter() {
+  return alphabet[Math.floor(Math.random() * alphabet.length)];
+}
+
+function generateRandomNumber() {
+  return Math.floor(Math.random() * 1000);
+}
+
+function generateRandomRobotName(usedNames) {
+  // get a new random name
+  const firstLetter = generateRandomLetter();
+  const secondtLetter = generateRandomLetter();
+  const randomNumber = generateRandomNumber();
+  const name = '' + firstLetter + secondtLetter + randomNumber;
+  // get another random name if it already exists
+  if (usedNames.includes(name)) {
+    return generateRandomRobotName(usedNames);
+  }
+
+  usedNames.push(name);
+  return [name, usedNames];
+}
 
 export class Robot {
-    constructor() {
-        this.usedNames = [];
-        this.name = 'ab123';
-      }
+  constructor() {
+    this.usedNames = [];
+    [this._name, this.usedNames] = generateRandomRobotName(this.usedNames);
+  }
 
-      name() {
-          return this.name
-      }
+  get name() {
+    return this._name;
+  }
 
-      rest() {
+  set name(value) {
+    throw new Error('Changing name not allowed');
+  }
 
-      }
+  reset() {
+    [this._name, this.usedNames] = generateRandomRobotName(this.usedNames);
+  }
 }
 
 Robot.releaseNames = () => {
-    this.usedNames = [];
+  Robot.usedNames = [];
 };
