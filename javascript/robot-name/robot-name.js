@@ -2,20 +2,29 @@
 
 const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
-function generateRandomLetter() {
+const generateRandomLetter = () => {
   return alphabet[Math.floor(Math.random() * alphabet.length)];
-}
+};
 
-function generateRandomNumber() {
-  return Math.floor(Math.random() * 1000);
-}
+const generateRandomNumberString = () => {
+  // force to string and add trailing zeros
+  let randomNumberString = Math.floor(Math.random() * 1000).toString();
+  return addTrailingZeros(randomNumberString);
+};
 
-function generateRandomRobotName(usedNames) {
-  // get a new random name
+const addTrailingZeros = (number) => {
+  if (number.length === 1) return number + '00';
+  if (number.length === 2) return number + '0';
+  return number;
+};
+
+const generateRandomRobotName = (usedNames) => {
   const firstLetter = generateRandomLetter();
   const secondtLetter = generateRandomLetter();
-  const randomNumber = generateRandomNumber();
-  const name = '' + firstLetter + secondtLetter + randomNumber;
+  const randomNumber = generateRandomNumberString();
+
+  const name = firstLetter + secondtLetter + randomNumber;
+
   // get another random name if it already exists
   if (usedNames.includes(name)) {
     return generateRandomRobotName(usedNames);
@@ -23,7 +32,7 @@ function generateRandomRobotName(usedNames) {
 
   usedNames.push(name);
   return [name, usedNames];
-}
+};
 
 export class Robot {
   constructor() {
