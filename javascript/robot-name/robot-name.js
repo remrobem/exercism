@@ -1,55 +1,57 @@
 'use strict';
 
-const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-
-const generateRandomLetter = () => {
-  return alphabet[Math.floor(Math.random() * alphabet.length)];
-};
-
-const generateRandomNumberString = () => {
-  // force to string and add trailing zeros
-  let randomNumberString = Math.floor(Math.random() * 1000).toString();
-  return addTrailingZeros(randomNumberString);
-};
-
-const addTrailingZeros = (number) => {
-  if (number.length === 1) return number + '00';
-  if (number.length === 2) return number + '0';
-  return number;
-};
-
-const generateRandomRobotName = (usedNames) => {
-  const firstLetter = generateRandomLetter();
-  const secondtLetter = generateRandomLetter();
-  const randomNumber = generateRandomNumberString();
-
-  const name = firstLetter + secondtLetter + randomNumber;
-
-  // get another random name if it already exists
-  if (usedNames.includes(name)) {
-    return generateRandomRobotName(usedNames);
-  }
-
-  usedNames.push(name);
-  return [name, usedNames];
-};
+const ALPHABET = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
 export class Robot {
   constructor() {
-    this.usedNames = [];
-    [this._name, this.usedNames] = generateRandomRobotName(this.usedNames);
+    [this._name, Robot.usedNames] = Robot.generateRandomRobotName(
+      Robot.usedNames
+    );
   }
+
+  static usedNames = [];
+
+  static generateRandomLetter = () => {
+    return ALPHABET[Math.floor(Math.random() * ALPHABET.length)];
+  };
+
+  static generateRandomNumberString = () => {
+    // force to string and add trailing zeros
+    const randomNumberString = Math.floor(Math.random() * 1000).toString();
+    return Robot.addTrailingZeros(randomNumberString);
+  };
+
+  static addTrailingZeros = (number) => {
+    if (number.length === 1) return number + '00';
+    if (number.length === 2) return number + '0';
+    return number;
+  };
+
+  static generateRandomRobotName = () => {
+    const name =
+      Robot.generateRandomLetter() +
+      Robot.generateRandomLetter() +
+      Robot.generateRandomNumberString();
+    // get another random name if it already exists
+    if (Robot.usedNames.includes(name)) {
+      return Robot.generateRandomRobotName();
+    }
+    Robot.usedNames.push(name);
+    return [name, Robot.usedNames];
+  };
 
   get name() {
     return this._name;
   }
 
-  set name(value) {
+  set name(_) {
     throw new Error('Changing name not allowed');
   }
 
   reset() {
-    [this._name, this.usedNames] = generateRandomRobotName(this.usedNames);
+    [this._name, Robot.usedNames] = Robot.generateRandomRobotName(
+      Robot.usedNames
+    );
   }
 }
 
